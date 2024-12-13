@@ -1,0 +1,52 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(uuid()) @map("id_user") @db.Uuid
+  name      String    @map("nm_user") @db.VarChar(250)
+  email     String    @unique @map("ds_email") @db.VarChar(250)
+  password  String    @map("vl_password") @db.Text
+  isAdmin   Boolean   @default(false) @map("bl_is_admin")
+  createdAt DateTime  @default(now()) @map("dt_creation")
+  checkIns  CheckIn[]
+
+  @@map("users")
+}
+
+model Gym {
+  id          String    @id @default(uuid()) @map("id_gym") @db.Uuid
+  name        String    @map("nm_gym") @db.VarChar(250)
+  description String    @map("ds_gym") @db.Text
+  phone       String    @map("vl_phone") @db.VarChar(15)
+  latitude    Decimal   @map("vl_latitude")
+  longitude   Decimal   @map("vl_longitude")
+  createdAt   DateTime  @default(now()) @map("dt_creation")
+  checkIns    CheckIn[]
+
+  @@index([name])
+  @@map("gyms")
+}
+
+model CheckIn {
+  id        String   @id @default(uuid()) @map("id_check_in") @db.Uuid
+  userId    String   @map("id_user") @db.Uuid
+  gymId     String   @map("id_gym") @db.Uuid
+  createdAt DateTime @default(now()) @map("dt_creation")
+
+  user User @relation(fields: [userId], references: [id])
+  gym  Gym  @relation(fields: [gymId], references: [id])
+
+  @@map("check_ins")
+}
