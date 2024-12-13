@@ -3,7 +3,6 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { User } from '@/domain/check-in/enterprise/entities/user'
 import { Injectable } from '@nestjs/common'
 import { UsersRepository } from '../../repositories/users-repository'
-import { HashGenerator } from '../../cryptography/hash-generator'
 import { EmailAlreadyInUseError } from '../__errors/email-already-in-use-error'
 
 interface EditUserUseCaseRequest {
@@ -21,10 +20,7 @@ type EditUserUseCaseResponse = Either<
 
 @Injectable()
 export class EditUserUseCase {
-  constructor(
-    private usersRepository: UsersRepository,
-    private hashGenerator: HashGenerator,
-  ) {}
+  constructor(private usersRepository: UsersRepository) {}
 
   async execute({
     email,

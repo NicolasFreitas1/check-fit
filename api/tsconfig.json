@@ -20,6 +20,7 @@
     "strictPropertyInitialization": false,
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "types": ["vitest/globals"]
   }
 }
