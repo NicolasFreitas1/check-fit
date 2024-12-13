@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config'
 import { envSchema } from './env/env'
 import { EnvService } from './env/env.service'
 import { RequestLoggerMiddleware } from './http/middlewares/request-logger.middleware'
+import { AuthModule } from './auth/auth.module'
 
 @Module({
   imports: [
@@ -12,8 +13,8 @@ import { RequestLoggerMiddleware } from './http/middlewares/request-logger.middl
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
+    AuthModule,
   ],
-  controllers: [],
   providers: [EnvService],
 })
 export class AppModule implements NestModule {
