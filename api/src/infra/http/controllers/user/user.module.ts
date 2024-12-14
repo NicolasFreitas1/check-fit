@@ -5,10 +5,16 @@ import { AuthenticateUserController } from './authenticate-user.controller'
 import { AuthenticateUserUseCase } from '@/domain/check-in/application/use-cases/user/authenticate-user'
 import { CreateAccountController } from './create-account.controller'
 import { CreateUserUseCase } from '@/domain/check-in/application/use-cases/user/create-user'
+import { DeleteAccountController } from './delete-account.controller'
+import { DeleteUserUseCase } from '@/domain/check-in/application/use-cases/user/delete-user'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
-  controllers: [AuthenticateUserController, CreateAccountController],
-  providers: [AuthenticateUserUseCase, CreateUserUseCase],
+  controllers: [
+    AuthenticateUserController,
+    CreateAccountController,
+    DeleteAccountController,
+  ],
+  providers: [AuthenticateUserUseCase, CreateUserUseCase, DeleteUserUseCase],
 })
 export class UserModule {}

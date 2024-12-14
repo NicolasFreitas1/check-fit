@@ -18,6 +18,7 @@ describe('Delete User', () => {
     await inMemoryUsersRepository.create(newUser)
 
     await sut.execute({
+      currentUserId: 'user-1',
       userId: 'user-1',
     })
 
