@@ -9,6 +9,8 @@ import { CreateGymController } from './create-gym.controller'
 import { CreateGymUseCase } from '@/domain/check-in/application/use-cases/gym/create-gym'
 import { EditGymController } from './edit-gym.controller'
 import { EditGymUseCase } from '@/domain/check-in/application/use-cases/gym/edit-gym'
+import { DeleteGymController } from './delete-gym.controller'
+import { DeleteGymUseCase } from '@/domain/check-in/application/use-cases/gym/delete-gym'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { EditGymUseCase } from '@/domain/check-in/application/use-cases/gym/edit
     ListGymsController,
     GetGymByIdController,
     EditGymController,
+    DeleteGymController,
   ],
   providers: [
     CreateGymUseCase,
     ListGymsUseCase,
     GetGymByIdUseCase,
     EditGymUseCase,
+    DeleteGymUseCase,
   ],
 })
 export class GymModule {}
