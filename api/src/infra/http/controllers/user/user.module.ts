@@ -11,6 +11,8 @@ import { GetUserProfileController } from './get-user-profile.controller'
 import { GetUserByIdUseCase } from '@/domain/check-in/application/use-cases/user/get-user-by-id'
 import { EditAccountController } from './edit-account.controller'
 import { EditUserUseCase } from '@/domain/check-in/application/use-cases/user/edit-user'
+import { EditAccountPasswordController } from './edit-account-password.controller'
+import { EditUserPasswordUseCase } from '@/domain/check-in/application/use-cases/user/edit-user-password'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -19,6 +21,7 @@ import { EditUserUseCase } from '@/domain/check-in/application/use-cases/user/ed
     CreateAccountController,
     GetUserProfileController,
     EditAccountController,
+    EditAccountPasswordController,
     DeleteAccountController,
   ],
   providers: [
@@ -26,6 +29,7 @@ import { EditUserUseCase } from '@/domain/check-in/application/use-cases/user/ed
     CreateUserUseCase,
     GetUserByIdUseCase,
     EditUserUseCase,
+    EditUserPasswordUseCase,
     DeleteUserUseCase,
   ],
 })
