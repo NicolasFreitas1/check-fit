@@ -28,6 +28,9 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
       where: { userId },
       skip: (page - 1) * perPage,
       take: perPage,
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     const countTotal = await this.prisma.checkIn.count({ where: { userId } })

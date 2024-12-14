@@ -17,6 +17,9 @@ export class PrismaGymsRepository implements GymsRepository {
     const gyms = await this.prisma.gym.findMany({
       skip: (page - 1) * perPage,
       take: perPage,
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     const countTotal = await this.prisma.gym.count()
