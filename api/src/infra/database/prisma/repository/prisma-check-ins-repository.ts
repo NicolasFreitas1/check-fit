@@ -6,6 +6,8 @@ import { PrismaService } from '../prisma.service'
 import { PrismaCheckInMapper } from '../mappers/prisma-check-in-mapper'
 import { endOfDay, startOfDay } from 'date-fns'
 import { DataWithPagination } from '@/core/repositories/data-with-pagination'
+import { PrismaCheckInWithGymMapper } from '../mappers/prisma-check-in-with-gym-mapper'
+import { CheckInWithGym } from '@/domain/check-in/enterprise/entities/value-objects/check-in-with-gym'
 
 @Injectable()
 export class PrismaCheckInsRepository implements CheckInsRepository {
@@ -23,7 +25,7 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
   async findManyByUser(
     { page, perPage }: PaginationParams,
     userId: string,
-  ): Promise<DataWithPagination<CheckIn>> {
+  ): Promise<DataWithPagination<CheckInWithGym>> {
     const checkIns = await this.prisma.checkIn.findMany({
       where: { userId },
       skip: (page - 1) * perPage,
@@ -31,13 +33,16 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
       orderBy: {
         createdAt: 'desc',
       },
+      include: {
+        gym: true,
+      },
     })
 
     const countTotal = await this.prisma.checkIn.count({ where: { userId } })
     const totalPages = Math.max(1, Math.ceil(countTotal / perPage))
 
     return {
-      data: checkIns.map(PrismaCheckInMapper.toDomain),
+      data: checkIns.map(PrismaCheckInWithGymMapper.toDomain),
       actualPage: page,
       amount: countTotal,
       perPage,
@@ -57,6 +62,23 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
     }
 
     return PrismaCheckInMapper.toDomain(checkIn)
+  }
+
+  async findByIdWithGym(id: string): Promise<CheckInWithGym | null> {
+    const checkIn = await this.prisma.checkIn.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        gym: true,
+      },
+    })
+
+    if (!checkIn) {
+      return null
+    }
+
+    return PrismaCheckInWithGymMapper.toDomain(checkIn)
   }
 
   async findUniqueByUser(userId: string, date: Date): Promise<CheckIn | null> {

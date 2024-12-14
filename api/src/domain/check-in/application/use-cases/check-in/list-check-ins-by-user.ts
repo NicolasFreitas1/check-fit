@@ -1,10 +1,10 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
-import { CheckIn } from '@/domain/check-in/enterprise/entities/check-in'
-import { Injectable } from '@nestjs/common'
-import { UsersRepository } from '../../repositories/users-repository'
-import { CheckInsRepository } from '../../repositories/check-ins-repository'
 import { DataWithPagination } from '@/core/repositories/data-with-pagination'
+import { CheckInWithGym } from '@/domain/check-in/enterprise/entities/value-objects/check-in-with-gym'
+import { Injectable } from '@nestjs/common'
+import { CheckInsRepository } from '../../repositories/check-ins-repository'
+import { UsersRepository } from '../../repositories/users-repository'
 
 interface ListCheckInsByUserUseCaseRequest {
   userId: string
@@ -15,7 +15,7 @@ interface ListCheckInsByUserUseCaseRequest {
 type ListCheckInsByUserUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    checkIns: DataWithPagination<CheckIn>
+    checkIns: DataWithPagination<CheckInWithGym>
   }
 >
 

@@ -1,6 +1,6 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
-import { CheckIn } from '@/domain/check-in/enterprise/entities/check-in'
+import { CheckInWithGym } from '@/domain/check-in/enterprise/entities/value-objects/check-in-with-gym'
 import { Injectable } from '@nestjs/common'
 import { CheckInsRepository } from '../../repositories/check-ins-repository'
 
@@ -11,7 +11,7 @@ interface GetCheckInByIdUseCaseRequest {
 type GetCheckInByIdUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    checkIn: CheckIn
+    checkIn: CheckInWithGym
   }
 >
 
@@ -22,7 +22,7 @@ export class GetCheckInByIdUseCase {
   async execute({
     checkInId,
   }: GetCheckInByIdUseCaseRequest): Promise<GetCheckInByIdUseCaseResponse> {
-    const checkIn = await this.checkInsRepository.findById(checkInId)
+    const checkIn = await this.checkInsRepository.findByIdWithGym(checkInId)
 
     if (!checkIn) {
       return left(new ResourceNotFoundError())
