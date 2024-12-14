@@ -4,6 +4,7 @@ import { CheckIn } from '@/domain/check-in/enterprise/entities/check-in'
 import { Injectable } from '@nestjs/common'
 import { UsersRepository } from '../../repositories/users-repository'
 import { CheckInsRepository } from '../../repositories/check-ins-repository'
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 
 interface ListCheckInsByUserUseCaseRequest {
   userId: string
@@ -14,7 +15,7 @@ interface ListCheckInsByUserUseCaseRequest {
 type ListCheckInsByUserUseCaseResponse = Either<
   ResourceNotFoundError,
   {
-    checkIns: CheckIn[]
+    checkIns: DataWithPagination<CheckIn>
   }
 >
 

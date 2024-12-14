@@ -1,3 +1,4 @@
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { CheckInsRepository } from '@/domain/check-in/application/repositories/check-ins-repository'
 import { CheckIn } from '@/domain/check-in/enterprise/entities/check-in'
@@ -14,12 +15,18 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
   async findManyByUser(
     { page, perPage }: PaginationParams,
     userId: string,
-  ): Promise<CheckIn[]> {
+  ): Promise<DataWithPagination<CheckIn>> {
     const checkIns = this.items
       .filter((item) => item.userId.toString() === userId)
       .slice((page - 1) * perPage, page * perPage)
 
-    return checkIns
+    return {
+      data: checkIns,
+      actualPage: page,
+      perPage,
+      amount: this.items.length,
+      totalPages: Math.max(1, Math.ceil(this.items.length / perPage)),
+    }
   }
 
   async findById(id: string): Promise<CheckIn | null> {

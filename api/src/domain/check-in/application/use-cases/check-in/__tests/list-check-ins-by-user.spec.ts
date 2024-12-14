@@ -40,7 +40,7 @@ describe('List Recent Check Ins', () => {
 
     expect(result.isRight()).toBe(true)
     if (result.isRight()) {
-      expect(result.value?.checkIns).toHaveLength(2)
+      expect(result.value?.checkIns.data).toHaveLength(2)
     }
   })
 })

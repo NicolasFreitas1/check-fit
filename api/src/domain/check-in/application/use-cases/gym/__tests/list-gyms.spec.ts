@@ -21,7 +21,7 @@ describe('List Recent Gyms', () => {
       perPage: 20,
     })
 
-    expect(result.value?.gyms).toEqual([
+    expect(result.value?.gyms.data).toEqual([
       expect.objectContaining({ name: 'gym-03' }),
       expect.objectContaining({ name: 'gym-02' }),
       expect.objectContaining({ name: 'gym-01' }),
@@ -38,6 +38,6 @@ describe('List Recent Gyms', () => {
       perPage: 20,
     })
 
-    expect(result.value?.gyms).toHaveLength(2)
+    expect(result.value?.gyms.data).toHaveLength(2)
   })
 })

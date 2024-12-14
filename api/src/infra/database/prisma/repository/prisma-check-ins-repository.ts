@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaCheckInMapper } from '../mappers/prisma-check-in-mapper'
 import { endOfDay, startOfDay } from 'date-fns'
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 
 @Injectable()
 export class PrismaCheckInsRepository implements CheckInsRepository {
@@ -22,14 +23,23 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
   async findManyByUser(
     { page, perPage }: PaginationParams,
     userId: string,
-  ): Promise<CheckIn[]> {
+  ): Promise<DataWithPagination<CheckIn>> {
     const checkIns = await this.prisma.checkIn.findMany({
       where: { userId },
       skip: (page - 1) * perPage,
       take: perPage,
     })
 
-    return checkIns.map(PrismaCheckInMapper.toDomain)
+    const countTotal = await this.prisma.checkIn.count({ where: { userId } })
+    const totalPages = Math.max(1, Math.ceil(countTotal / perPage))
+
+    return {
+      data: checkIns.map(PrismaCheckInMapper.toDomain),
+      actualPage: page,
+      amount: countTotal,
+      perPage,
+      totalPages,
+    }
   }
 
   async findById(id: string): Promise<CheckIn | null> {

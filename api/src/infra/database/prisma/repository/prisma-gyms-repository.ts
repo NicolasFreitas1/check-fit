@@ -4,18 +4,31 @@ import { Gym } from '@/domain/check-in/enterprise/entities/gym'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaGymMapper } from '../mappers/prisma-gym-mapper'
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 
 @Injectable()
 export class PrismaGymsRepository implements GymsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findMany({ page, perPage }: PaginationParams): Promise<Gym[]> {
+  async findMany({
+    page,
+    perPage,
+  }: PaginationParams): Promise<DataWithPagination<Gym>> {
     const gyms = await this.prisma.gym.findMany({
       skip: (page - 1) * perPage,
       take: perPage,
     })
 
-    return gyms.map(PrismaGymMapper.toDomain)
+    const countTotal = await this.prisma.gym.count()
+    const totalPages = Math.max(1, Math.ceil(countTotal / perPage))
+
+    return {
+      data: gyms.map(PrismaGymMapper.toDomain),
+      actualPage: page,
+      amount: countTotal,
+      perPage,
+      totalPages,
+    }
   }
 
   async findById(id: string): Promise<Gym | null> {
