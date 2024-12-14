@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: check-fit-pg
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=check-fit-db
+    networks:
+      - check_fit_network
+
+  server_check_fit:
+    build:
+      context: ./api
+      dockerfile: /docker/development/Dockerfile
+    image: server_check_fit
+    ports:
+      - '3000:3000'
+    networks:
+      - check_fit_network
+
+networks:
+  check_fit_network:
+    driver: bridge
