@@ -6,13 +6,13 @@ import {
   Body,
   Controller,
   Post,
-  UnauthorizedException,
+  UnprocessableEntityException,
 } from '@nestjs/common'
+import { UserPresenter } from '../../presenters/user-presenter'
 import {
   AuthenticateUserBodySchema,
   bodyValidationPipe,
 } from './dto/authenticate-user.dto'
-import { UserPresenter } from '../../presenters/user-presenter'
 
 @Public()
 @Controller('/sessions')
@@ -33,9 +33,9 @@ export class AuthenticateUserController {
 
       switch (error.constructor) {
         case WrongCredentialsError:
-          throw new UnauthorizedException(error.message)
+          throw new UnprocessableEntityException(error.message)
         default:
-          throw new BadRequestException()
+          throw new BadRequestException(error.message)
       }
     }
 
