@@ -1,11 +1,13 @@
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { EditGymUseCase } from '@/domain/check-in/application/use-cases/gym/edit-gym'
 import { IsAdmin } from '@/infra/auth/is-admin'
 import { IsAdminGuard } from '@/infra/auth/is-admin.guard'
 import {
+  BadRequestException,
   Body,
   Controller,
   HttpCode,
-  InternalServerErrorException,
+  NotFoundException,
   Param,
   ParseUUIDPipe,
   Put,
@@ -37,9 +39,14 @@ export class EditGymController {
     })
 
     if (result.isLeft()) {
-      console.log(result)
+      const error = result.value
 
-      throw new InternalServerErrorException('Something went wrong')
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }
