@@ -32,7 +32,10 @@ describe('Edit Account Password (E2E)', () => {
       password: await hash('123', 8),
     })
 
-    const accessToken = jwt.sign({ sub: user.id.toString() })
+    const accessToken = jwt.sign({
+      sub: user.id.toString(),
+      isAdmin: user.isAdmin,
+    })
 
     const response = await request(app.getHttpServer())
       .patch(`/accounts/${user.id.toString()}/password`)
@@ -41,8 +44,6 @@ describe('Edit Account Password (E2E)', () => {
         oldPassword: '123',
         newPassword: 'newPassword123',
       })
-
-    console.log(response)
 
     expect(response.statusCode).toBe(204)
   })

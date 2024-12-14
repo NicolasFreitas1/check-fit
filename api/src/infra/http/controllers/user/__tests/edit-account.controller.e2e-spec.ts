@@ -32,7 +32,10 @@ describe('Edit Account (E2E)', () => {
   test('[PUT] /accounts/:userId', async () => {
     const user = await userFactory.makePrismaUser({ name: 'example name' })
 
-    const accessToken = jwt.sign({ sub: user.id.toString() })
+    const accessToken = jwt.sign({
+      sub: user.id.toString(),
+      isAdmin: user.isAdmin,
+    })
 
     const response = await request(app.getHttpServer())
       .put(`/accounts/${user.id.toString()}`)

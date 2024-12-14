@@ -31,7 +31,10 @@ describe('Delete account (E2E)', () => {
   test('[DELETE] /accounts', async () => {
     const user = await userFactory.makePrismaUser()
 
-    const accessToken = jwt.sign({ sub: user.id.toString() })
+    const accessToken = jwt.sign({
+      sub: user.id.toString(),
+      isAdmin: user.isAdmin,
+    })
 
     const response = await request(app.getHttpServer())
       .delete('/accounts')
