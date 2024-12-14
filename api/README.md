@@ -1,73 +1,451 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Check Fit API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Check Fit API é uma aplicação backend construída com NestJS para gerenciar os dados da aplicação Check Fit. Ela fornece endpoints RESTful para realizar operações CRUD e outras funcionalidades necessárias.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Tecnologias Utilizadas
 
-## Description
+- **NestJS**: Framework para construir aplicações Node.js escaláveis e testáveis.
+- **Prisma**: ORM para interação com o banco de dados.
+- **JWT**: Implementação de autenticação via JSON Web Token.
+- **Zod**: Validação de dados.
+- **Vitest**: Framework de testes.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Instalação
 
-## Installation
+### Pré-requisitos
 
-```bash
-$ pnpm install
+- Certifique-se de ter o Node.js instalado. Se não tiver, instale-o a partir do [site oficial](https://nodejs.org/).
+- Instale o gerenciador de pacotes **pnpm**:
+  ```bash
+  npm install -g pnpm
+  ```
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto e defina as variáveis necessárias para a configuração do ambiente de desenvolvimento. Exemplo:
+
+```.env
+# Prisma (Database)
+DATABASE_URL=""
+
+# Auth (JWT) (Algoritimo utilizado: RS256)
+JWT_PRIVATE_KEY=""
+JWT_PUBLIC_KEY=""
+
+# API Port
+PORT=""
 ```
 
-## Running the app
+### Rodando localmente
 
-```bash
-# development
-$ pnpm run start
+1. Certifique-se de ter preenchido o arquivo `.env`:
 
-# watch mode
-$ pnpm run start:dev
+2. Instale as dependências da aplicação:
 
-# production mode
-$ pnpm run start:prod
+   ```bash
+   pnpm install
+   ```
+
+3. Crie o banco de dados rodando o seguinte comando:
+
+   ```bash
+   pnpx prisma migrate deploy
+   ```
+
+4. Gere a tipagem necessária para a node_modules:
+
+   ```bash
+   pnpx prisma generate
+   ```
+
+5. Execute a seed do banco de dados:
+
+   ```bash
+   pnpx prisma db seed
+   ```
+
+6. Certifique que no arquivo `package.json` a variável `type` está desse formato:
+
+   ```json
+   "type": "commonjs",
+   ```
+
+7. Inicie a API:
+
+   ```bash
+   pnpm start:dev
+   ```
+
+### Executando os testes
+
+1. Certifique-se de ter preenchido o arquivo `.env`:
+
+2. Instale as dependências da aplicação:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Altere o `type` no `package.json` para **module**:
+
+   ```json
+   "type": "module",
+   ```
+
+4. Para rodar os testes unitários:
+
+   ```bash
+   pnpm test
+   ```
+
+5. Para rodar os testes End to End:
+
+   ```bash
+   pnpm test:e2e
+   ```
+
+## Arquitetura
+
+Este projeto segue a Clean Architecture juntamente com os princípios do Domain-Driven Design (DDD), com o objetivo de manter a aplicação escalável, testável e fácil de entender. A arquitetura é dividida em camadas, com as responsabilidades separadas conforme os seguintes princípios:
+
+- **Domain Layer (Domínio)**: Contém as entidades e lógica de negócios, incluindo as regras essenciais do sistema.
+- **Application Layer (Aplicação)**: Define os casos de uso da aplicação e orquestra as interações entre o domínio e as camadas externas.
+- **Infrastructure Layer (Infraestrutura)**: Responsável por toda a implementação técnica, como bancos de dados, APIs externas e outros serviços.
+
+## Endpoints da API
+
+### 1. Autenticar
+
+- **URL**: `/sessions`
+- **Método**: `POST`
+- **Descrição**: Realiza a autenticação do usuário.
+
+#### Corpo da Requisição (Body):
+
+```json
+{
+  "email": "example@example.com",
+  "password": "examplepassword123"
+}
 ```
 
-## Test
+#### Respostas:
 
-```bash
-# unit tests
-$ pnpm run test
+- **201**: Usuário autenticado com sucesso.
 
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
+```json
+{
+  "access_token": "tokenjwt",
+  "user": {
+    "id": "uuid",
+    "name": "Example Name",
+    "email": "example@example.com"
+  }
+}
 ```
 
-## Support
+- **422**: Credenciais invalidas.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### 2. Criar Conta
 
-## Stay in touch
+- **URL**: `/accounts`
+- **Método**: `POST`
+- **Descrição**: Cria uma nova conta.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+#### Corpo da Requisição (Body):
 
-## License
+```json
+{
+  "name": "Example Name",
+  "email": "example@example.com",
+  "password": "examplepassword123"
+}
+```
 
-Nest is [MIT licensed](LICENSE).
+#### Respostas:
+
+- **201**: Conta criada com sucesso.
+
+- **409**: Email já esta em uso.
+
+### 3. Deletar Conta
+
+- **URL**: `/accounts`
+- **Método**: `DELETE`
+- **Descrição**: Deleta a conta do usuário atual.
+
+#### Respostas:
+
+- **204**: Conta deletada com sucesso.
+
+- **404**: Conta não encontrada.
+
+### 4. Editar Conta
+
+- **URL**: `/accounts/:userId`
+- **Método**: `PUT`
+- **Descrição**: Edita informações da conta do usuário.
+
+#### Corpo da Requisição (Body):
+
+```json
+{
+  "name": "Example Name",
+  "email": "example@example.com"
+}
+```
+
+#### Respostas:
+
+- **204**: Conta editada com sucesso.
+
+- **404**: Conta não encontrada.
+
+- **409**: Email já esta em uso.
+
+### 5. Editar Senha
+
+- **URL**: `/accounts/:userId/password`
+- **Método**: `PATCH`
+- **Descrição**: Edita a senha da conta do usuário.
+
+#### Corpo da Requisição (Body):
+
+```json
+{
+  "oldPassword": "oldpassword123",
+  "newPassword": "newpassword123"
+}
+```
+
+#### Respostas:
+
+- **204**: Senha editada com sucesso.
+
+- **404**: Conta não encontrada.
+
+- **422**: Credenciais invalidas.
+
+### 6. Obter perfil
+
+- **URL**: `/accounts/me`
+- **Método**: `GET`
+- **Descrição**: Obtém o perfil do usuário atual.
+
+#### Respostas:
+
+- **200**: Conta retornada com sucesso.
+
+```json
+{
+  "user": {
+    "id": "uuid",
+    "name": "Example Name",
+    "email": "example@example.com"
+  }
+}
+```
+
+- **404**: Conta não encontrada.
+
+### 7. Criar academia
+
+- **URL**: `/gyms`
+- **Método**: `POST`
+- **Descrição**: Cria uma nova academia (somente para usuários administradores).
+
+#### Corpo da Requisição (Body):
+
+```json
+{
+  "name": "Example Name",
+  "description": "Example description",
+  "phone": "+5511998765432",
+  "latitude": -15.09,
+  "longitude": 15.09
+}
+```
+
+#### Respostas:
+
+- **201**: Academia criada com sucesso.
+
+### 8. Editar academia
+
+- **URL**: `/gyms/:gymId`
+- **Método**: `PUT`
+- **Descrição**: Edita uma academia (somente para usuários administradores).
+
+#### Corpo da Requisição (Body):
+
+```json
+{
+  "name": "Example Name",
+  "description": "Example description",
+  "phone": "+5511998765432",
+  "latitude": -15.09,
+  "longitude": 15.09
+}
+```
+
+#### Respostas:
+
+- **204**: Academia editada com sucesso.
+- **404**: Academia não encontrada.
+
+### 9. Deletar academia
+
+- **URL**: `/gyms/:gymId`
+- **Método**: `DELETE`
+- **Descrição**: Deleta uma academia (somente para usuários administradores).
+
+#### Respostas:
+
+- **204**: Academia editada com sucesso.
+- **404**: Academia não encontrada.
+
+### 10. Listar academias
+
+- **URL**: `/gyms`
+- **Método**: `GET`
+- **Descrição**: Lista as academias paginadas.
+
+#### Respostas:
+
+- **200**: Listagem retornada com sucesso.
+
+```json
+{
+  "gyms": [
+    {
+      "id": "uuid",
+      "name": "Example Name",
+      "description": "Example description",
+      "phone": "+5511998765432",
+      "latitude": -15.09,
+      "longitude": 15.09,
+      "createdAt": "2024-12-14T19:12:34.567Z"
+    }
+  ],
+  "amount": 1,
+  "totalPages": 1,
+  "actualPage": 1,
+  "perPage": 20
+}
+```
+
+### 11. Retornar academia especifica
+
+- **URL**: `/gyms/:gymId`
+- **Método**: `GET`
+- **Descrição**: Retorna uma academia de acordo com o id especificado.
+
+#### Respostas:
+
+- **200**: Academia retornada com sucesso.
+
+```json
+{
+  "gyms": {
+    "id": "uuid",
+    "name": "Example Name",
+    "description": "Example description",
+    "phone": "+5511998765432",
+    "latitude": -15.09,
+    "longitude": 15.09,
+    "createdAt": "2024-12-14T19:12:34.567Z"
+  }
+}
+```
+
+- **404**: Academia não encontrada.
+
+### 12. Realizar check-in em uma academia
+
+- **URL**: `/gyms/:gymId/check-ins`
+- **Método**: `POST`
+- **Descrição**: Realiza check-in em uma academia.
+
+#### Respostas:
+
+- **201**: Check-in realizado com sucesso.
+- **404**: Academia não encontrada.
+- **409**: Usuário ja realizou check-in no dia atual.
+
+### 13. Listar check-ins do usuário
+
+- **URL**: `/accounts/check-ins`
+- **Método**: `GET`
+- **Descrição**: Retorna os check-ins do usuário atual.
+
+#### Respostas:
+
+- **200**: Listagem retornada com sucesso.
+
+```json
+{
+  "checkIns": [
+    {
+      "id": "uuid",
+      "gymId": "uuid",
+      "userId": "uuid",
+      "gym": {
+        "id": "uuid",
+        "name": "Example Name",
+        "description": "Example description",
+        "phone": "+5511998765432",
+        "latitude": -15.09,
+        "longitude": 15.09,
+        "createdAt": "2024-12-14T19:12:34.567Z"
+      }
+    }
+  ],
+  "amount": 1,
+  "totalPages": 1,
+  "actualPage": 1,
+  "perPage": 20
+}
+```
+
+### 14. Exibir um check-in
+
+- **URL**: `/check-ins/:checkInId`
+- **Método**: `GET`
+- **Descrição**: Exibe os check-ins do usuário atual.
+
+#### Respostas:
+
+- **200**: Check-in retornado com sucesso.
+
+```json
+{
+  "checkIn": {
+    "id": "uuid",
+    "gymId": "uuid",
+    "userId": "uuid",
+    "gym": {
+      "id": "uuid",
+      "name": "Example Name",
+      "description": "Example description",
+      "phone": "+5511998765432",
+      "latitude": -15.09,
+      "longitude": 15.09,
+      "createdAt": "2024-12-14T19:12:34.567Z"
+    }
+  }
+}
+```
+
+- **405**: Check-in não encontrado.
+
+### 15. Deletar check-in
+
+- **URL**: `/check-ins/:checkInId`
+- **Método**: `DELETE`
+- **Descrição**: Deleta um check-in.
+
+#### Respostas:
+
+- **204**: Check-in deletado com sucesso.
+
+- **404**: Check-in não encontrado.

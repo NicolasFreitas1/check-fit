@@ -1,16 +1,16 @@
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
-import { EmailAlreadyInUseError } from '@/domain/check-in/application/use-cases/__errors/email-already-in-use-error'
+import { WrongCredentialsError } from '@/domain/check-in/application/use-cases/__errors/wrong-credentials-error'
 import { EditUserPasswordUseCase } from '@/domain/check-in/application/use-cases/user/edit-user-password'
 import {
   BadRequestException,
   Body,
-  ConflictException,
   Controller,
   HttpCode,
   NotFoundException,
   Param,
   ParseUUIDPipe,
   Patch,
+  UnprocessableEntityException,
 } from '@nestjs/common'
 import {
   EditAccountPasswordBodySchema,
@@ -41,8 +41,8 @@ export class EditAccountPasswordController {
       switch (error.constructor) {
         case ResourceNotFoundError:
           throw new NotFoundException(error.message)
-        case EmailAlreadyInUseError:
-          throw new ConflictException(error.message)
+        case WrongCredentialsError:
+          throw new UnprocessableEntityException(error.message)
         default:
           throw new BadRequestException(error.message)
       }
