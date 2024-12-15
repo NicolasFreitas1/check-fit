@@ -2,9 +2,9 @@ import { api } from "@/lib/axios";
 import { Gym } from "@/types/gym";
 
 export interface ListGymsQuery {
-  page?: number;
-  perPage?: number;
-  gymName?: string;
+  page?: number | null;
+  perPage?: number | null;
+  gymName?: string | null;
 }
 
 export interface ListGymsResponse {
