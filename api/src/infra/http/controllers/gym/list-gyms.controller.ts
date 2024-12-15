@@ -39,8 +39,13 @@ export class ListGymsController {
   async handle(
     @Query('page', queryValidationPipe) page: pageQueryParamSchema,
     @Query('per_page', sizeValidationPipe) perPage: sizeQueryParamSchema,
+    @Query('gymName') gymName: string,
   ) {
-    const result = await this.listGymsUseCase.execute({ page, perPage })
+    const result = await this.listGymsUseCase.execute({
+      page,
+      perPage,
+      filter: { gymName },
+    })
 
     if (result.isLeft()) {
       console.log(result)

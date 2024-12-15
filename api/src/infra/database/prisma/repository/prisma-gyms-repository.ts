@@ -5,20 +5,31 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaGymMapper } from '../mappers/prisma-gym-mapper'
 import { DataWithPagination } from '@/core/repositories/data-with-pagination'
+import { FilterGyms } from '@/domain/check-in/application/use-cases/gym/filter/filter-gyms'
+import { Prisma } from '@prisma/client'
 
 @Injectable()
 export class PrismaGymsRepository implements GymsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findMany({
-    page,
-    perPage,
-  }: PaginationParams): Promise<DataWithPagination<Gym>> {
+  async findMany(
+    { page, perPage }: PaginationParams,
+    { gymName }: FilterGyms,
+  ): Promise<DataWithPagination<Gym>> {
+    const filter: Prisma.GymWhereInput = {}
+
+    if (gymName) {
+      filter.name = { contains: gymName, mode: 'insensitive' }
+    }
+
     const gyms = await this.prisma.gym.findMany({
       skip: (page - 1) * perPage,
       take: perPage,
       orderBy: {
         createdAt: 'desc',
+      },
+      where: {
+        ...filter,
       },
     })
 

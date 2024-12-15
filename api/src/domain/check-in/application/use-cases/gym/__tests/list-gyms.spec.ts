@@ -19,6 +19,7 @@ describe('List Recent Gyms', () => {
     const result = await sut.execute({
       page: 1,
       perPage: 20,
+      filter: {},
     })
 
     expect(result.value?.gyms.data).toEqual([
@@ -36,6 +37,7 @@ describe('List Recent Gyms', () => {
     const result = await sut.execute({
       page: 2,
       perPage: 20,
+      filter: {},
     })
 
     expect(result.value?.gyms.data).toHaveLength(2)
