@@ -14,7 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -30,6 +30,7 @@ type SignInFormType = z.infer<typeof signInForm>;
 
 export function SignIn() {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<SignInFormType>({
     resolver: zodResolver(signInForm),
@@ -41,11 +42,12 @@ export function SignIn() {
 
   async function onSubmit(data: SignInFormType) {
     try {
-      // Fazer login
       const auth = await signIn(data);
 
       login(auth.access_token, auth.user);
       form.reset();
+      toast.success("Login realizado com sucesso!");
+      navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
 
