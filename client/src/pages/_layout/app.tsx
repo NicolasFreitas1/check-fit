@@ -7,9 +7,15 @@ import { useAuth } from "@/context/AuthContext";
 import { api } from "@/lib/axios";
 
 export function AppLayout() {
+  const { isAuthenticated } = useAuth();
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/sign-in", { replace: true });
+    }
+
     const interceptorId = api.interceptors.response.use(
       (response) => response,
       (error) => {
@@ -28,13 +34,7 @@ export function AppLayout() {
     return () => {
       api.interceptors.response.eject(interceptorId);
     };
-  }, [navigate]);
-
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    navigate("/sign-in", { replace: true });
-  }
+  }, [navigate, isAuthenticated]);
 
   return (
     <div className="flex min-h-screen flex-col antialiased">

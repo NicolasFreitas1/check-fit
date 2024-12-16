@@ -10,8 +10,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useNavigate } from "react-router-dom";
 
 export function AccountMenu() {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   return (
@@ -20,16 +22,18 @@ export function AccountMenu() {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="flex items-center gap-2 select-none"
+            className="flex items-center justify-between gap-2 select-none min-w-[300px]"
           >
-            <Avatar className="h-8 w-8">
-              <AvatarFallback>{user?.name[0]}</AvatarFallback>
-            </Avatar>
-            <span className="text-center">{user?.name}</span>
+            <div className="flex items-center gap-2">
+              <Avatar className="h-8 w-8">
+                <AvatarFallback>{user?.name[0]}</AvatarFallback>
+              </Avatar>
+              <span>{user?.name}</span>
+            </div>
             <ChevronDown className="h-4 w-4" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
+        <DropdownMenuContent className="min-w-[300px] ">
           <DropdownMenuLabel className="flex flex-col gap-1">
             <span>{user?.name}</span>
             <span className="text-xs font-normal text-muted-foreground">
@@ -37,9 +41,14 @@ export function AccountMenu() {
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Meu perfil</span>
+          <DropdownMenuItem asChild>
+            <button
+              className="w-full"
+              onClick={() => navigate("/profile", { replace: true })}
+            >
+              <User className="mr-2 h-4 w-4" />
+              <span>Meu perfil</span>
+            </button>
           </DropdownMenuItem>
           <DropdownMenuItem
             asChild

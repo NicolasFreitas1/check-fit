@@ -6,6 +6,8 @@ import { SignIn } from "./pages/auth/sign-in";
 import { SignUp } from "./pages/auth/sign-up";
 import { Error } from "./pages/error";
 import { NotFound } from "./pages/not-found";
+import { CheckIns } from "./pages/app/check-ins/check-ins";
+import { Profile } from "./pages/app/profile/profile";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ export const router = createBrowserRouter([
       {
         path: "/gyms",
         element: <Gyms />,
+      },
+      {
+        path: "/check-ins",
+        element: <CheckIns />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

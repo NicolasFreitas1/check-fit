@@ -1,23 +1,15 @@
-import { Gym } from "@/types/gym";
-import { formatPhone } from "@/utils/phone-formater";
+import { CheckIn } from "@/types/check-in";
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, Trash } from "lucide-react";
 
-export const gymColumns: ColumnDef<Gym>[] = [
+export const checkInColumns: ColumnDef<CheckIn>[] = [
   {
-    accessorKey: "name",
-    header: "Nome",
+    accessorKey: "gymName",
+    header: "Academia",
   },
   {
-    accessorKey: "description",
-    header: "Descrição",
-  },
-  {
-    accessorKey: "phone",
-    header: "Telefone",
-    cell: ({ row: { original: gym } }) => {
-      return formatPhone(gym.phone);
-    },
+    accessorKey: "createdAt",
+    header: "Feito em",
   },
   {
     accessorKey: "actions",
