@@ -1,7 +1,13 @@
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Gym } from "@/types/gym";
 import { formatPhone } from "@/utils/phone-formater";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, Trash } from "lucide-react";
+import { MakeCheckInButton } from "./make-check-in-button";
 
 export const gymColumns: ColumnDef<Gym>[] = [
   {
@@ -22,11 +28,17 @@ export const gymColumns: ColumnDef<Gym>[] = [
   {
     accessorKey: "actions",
     header: "Ações",
-    cell: () => {
+    cell: ({ row: { original: gym } }) => {
       return (
-        <div className="flex space-x-1 items-center justify-normal">
-          <Eye height={24} width={24} />
-          <Trash height={24} width={24} />
+        <div className="flex space-x-1">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <MakeCheckInButton gymId={gym.id} gymName={gym.name} />
+              </TooltipTrigger>
+              <TooltipContent>Realizar check-in</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       );
     },

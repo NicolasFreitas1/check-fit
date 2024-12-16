@@ -30,7 +30,7 @@ export function Gyms() {
     const gymsResponse = await listGyms({
       gymName: gymNameFilter,
       page,
-      perPage: 10,
+      perPage: 8,
     });
 
     setGyms(gymsResponse);
