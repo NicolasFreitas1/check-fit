@@ -1,10 +1,11 @@
 import { getProfile, GetProfileResponse } from "@/api/get-profile";
 import { listCheckIns } from "@/api/list-check-ins";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { CheckIn } from "@/types/check-in";
-import { Lock, Pencil, UserMinus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { DeleteAccountButton } from "./delete-account-button";
+import { EditAccountButton } from "./edit-account-button";
+import { EditPasswordButton } from "./edit-password-button";
 import { LastCheckIns } from "./last-check-ins";
 
 export function Profile() {
@@ -59,19 +60,10 @@ export function Profile() {
                     }
                   )}
                 </h3>
-                <div className="flex-col space-y-3 w-full justify-end">
-                  <Button className="w-full font-bold" variant="secondary">
-                    <Pencil className="h-4 w-4" />
-                    Editar perfil
-                  </Button>
-                  <Button className="w-full font-bold" variant="secondary">
-                    <Lock className="h-4 w-4" />
-                    Editar senha
-                  </Button>
-                  <Button className="w-full font-bold" variant="destructive">
-                    <UserMinus className="h-4 w-4" />
-                    Deletar perfil
-                  </Button>
+                <div className="flex-col space-y-3 w-full">
+                  <EditAccountButton user={userProfile.user} />
+                  <EditPasswordButton userId={userProfile.user.id} />
+                  <DeleteAccountButton />
                 </div>
               </div>
 

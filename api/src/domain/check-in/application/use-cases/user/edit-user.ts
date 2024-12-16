@@ -33,10 +33,12 @@ export class EditUserUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const emailInUse = await this.usersRepository.findByEmail(email)
+    if (user.email !== email) {
+      const emailInUse = await this.usersRepository.findByEmail(email)
 
-    if (emailInUse) {
-      return left(new EmailAlreadyInUseError(email))
+      if (emailInUse) {
+        return left(new EmailAlreadyInUseError(email))
+      }
     }
 
     user.name = name
