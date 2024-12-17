@@ -13,6 +13,9 @@ export function Gyms() {
   const gymName = searchParams.get("gymName");
 
   const pageIndex = z.coerce.number().parse(searchParams.get("page") ?? 1);
+  const perPageIndex = z.coerce
+    .number()
+    .parse(searchParams.get("per_page") ?? 20);
 
   const [gyms, setGyms] = useState<ListGymsResponse | undefined>(undefined);
 
@@ -23,22 +26,30 @@ export function Gyms() {
     });
   }
 
+  function handlePerPagePagination(perPage: number) {
+    setSearchParams((state) => {
+      state.set("per_page", perPage.toString());
+      return state;
+    });
+  }
+
   async function fetchGyms(
     gymNameFilter: string | null | undefined,
-    page: number
+    page: number,
+    perPage: number
   ) {
     const gymsResponse = await listGyms({
       gymName: gymNameFilter,
       page,
-      perPage: 8,
+      perPage,
     });
 
     setGyms(gymsResponse);
   }
 
   useEffect(() => {
-    fetchGyms(gymName, pageIndex);
-  }, [gymName, pageIndex]);
+    fetchGyms(gymName, pageIndex, perPageIndex);
+  }, [gymName, pageIndex, perPageIndex]);
 
   return (
     <>
@@ -46,13 +57,15 @@ export function Gyms() {
         <h1 className="text-3xl font-bold tracking-tight">Academias</h1>
         <div className="space-y-2.5">
           <GymTableFilter />
-          <div className="border rounded-md">
+          <div className="overflow-hidden">
             {gyms && <DataTable columns={gymColumns} data={gyms.gyms} />}
           </div>
           {gyms && (
             <Pagination
               onPageChange={handlePagination}
+              onPerPageChange={handlePerPagePagination}
               pageIndex={gyms.actualPage}
+              perPageIndex={gyms.perPage}
               perPage={gyms.perPage}
               totalCount={gyms.amount}
               totalPages={gyms.totalPages}

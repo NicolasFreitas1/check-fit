@@ -6,19 +6,30 @@ import {
 } from "lucide-react";
 
 import { Button } from "./ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 interface PaginationNumber {
   pageIndex: number;
+  perPageIndex: number;
   totalCount: number;
   perPage: number;
   totalPages: number;
   onPageChange: (pageIndex: number) => Promise<void> | void;
+  onPerPageChange: (perPageIndex: number) => Promise<void> | void;
 }
 
 export function Pagination({
   pageIndex,
+  perPageIndex,
   totalCount,
   onPageChange,
+  onPerPageChange,
   totalPages,
 }: PaginationNumber) {
   return (
@@ -34,7 +45,7 @@ export function Pagination({
           <Button
             onClick={() => onPageChange(0)}
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="h-8 w-8 "
             disabled={pageIndex === 1}
           >
             <ChevronsLeft className="h-4 w-4" />
@@ -43,7 +54,7 @@ export function Pagination({
           <Button
             onClick={() => onPageChange(pageIndex - 2)}
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="h-8 w-8"
             disabled={pageIndex === 1}
           >
             <ChevronLeft className="h-4 w-4" />
@@ -52,7 +63,7 @@ export function Pagination({
           <Button
             onClick={() => onPageChange(pageIndex)}
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="h-8 w-8"
             disabled={pageIndex === totalPages}
           >
             <ChevronRight className="h-4 w-4" />
@@ -61,12 +72,28 @@ export function Pagination({
           <Button
             onClick={() => onPageChange(totalPages - 1)}
             variant="outline"
-            className="h-8 w-8 p-0"
+            className="h-8 w-8"
             disabled={pageIndex === totalPages}
           >
             <ChevronsRight className="h-4 w-4" />
             <span className="sr-only">Última página</span>
           </Button>
+          <Select
+            onValueChange={(value) => onPerPageChange(Number(value))}
+            defaultValue={perPageIndex.toString()}
+          >
+            <SelectTrigger>
+              <SelectValue
+                placeholder={perPageIndex}
+                className="flex h-8 w-8"
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

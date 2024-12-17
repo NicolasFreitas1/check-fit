@@ -10,6 +10,9 @@ export function CheckIns() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pageIndex = z.coerce.number().parse(searchParams.get("page") ?? 1);
+  const perPageIndex = z.coerce
+    .number()
+    .parse(searchParams.get("per_page") ?? 20);
 
   const [checkIns, setCheckIns] = useState<ListCheckInsResult | undefined>(
     undefined
@@ -22,18 +25,25 @@ export function CheckIns() {
     });
   }
 
-  async function fetchCheckIns(page: number) {
+  function handlePerPagePagination(perPage: number) {
+    setSearchParams((state) => {
+      state.set("per_page", perPage.toString());
+      return state;
+    });
+  }
+
+  async function fetchCheckIns(page: number, perPage: number) {
     const checkInsResponse = await listCheckIns({
       page,
-      perPage: 10,
+      perPage,
     });
 
     setCheckIns(checkInsResponse);
   }
 
   useEffect(() => {
-    fetchCheckIns(pageIndex);
-  }, [pageIndex]);
+    fetchCheckIns(pageIndex, perPageIndex);
+  }, [pageIndex, perPageIndex]);
 
   return (
     <>
@@ -48,6 +58,8 @@ export function CheckIns() {
           {checkIns && (
             <Pagination
               onPageChange={handlePagination}
+              onPerPageChange={handlePerPagePagination}
+              perPageIndex={checkIns.perPage}
               pageIndex={checkIns.actualPage}
               perPage={checkIns.perPage}
               totalCount={checkIns.amount}

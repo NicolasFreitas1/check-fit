@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker/locale/pt_BR'
 import { PrismaClient } from '@prisma/client'
 import { hash } from 'bcryptjs'
 
@@ -22,15 +23,17 @@ async function main() {
     },
   })
 
-  await prisma.gym.create({
-    data: {
-      name: 'Academia Fit',
-      description: 'Uma academia incrível com equipamentos modernos.',
-      phone: '1234567890',
-      latitude: 40.7128,
-      longitude: -74.006,
-    },
-  })
+  for (let index = 0; index < 25; index++) {
+    await prisma.gym.create({
+      data: {
+        name: faker.company.name(),
+        description: faker.lorem.sentence(),
+        phone: faker.phone.number({ style: 'national' }),
+        latitude: faker.location.latitude(),
+        longitude: faker.location.longitude(),
+      },
+    })
+  }
 }
 
 main()

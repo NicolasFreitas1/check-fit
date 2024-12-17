@@ -8,6 +8,7 @@ import { Gym } from "@/types/gym";
 import { formatPhone } from "@/utils/phone-formater";
 import { ColumnDef } from "@tanstack/react-table";
 import { MakeCheckInButton } from "./make-check-in-button";
+import { GymDetailsButton } from "./gym-details-button";
 
 export const gymColumns: ColumnDef<Gym>[] = [
   {
@@ -37,6 +38,15 @@ export const gymColumns: ColumnDef<Gym>[] = [
                 <MakeCheckInButton gymId={gym.id} gymName={gym.name} />
               </TooltipTrigger>
               <TooltipContent>Realizar check-in</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <GymDetailsButton gym={gym} />
+              </TooltipTrigger>
+              <TooltipContent>Detalhes da academia</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </div>
