@@ -1,16 +1,16 @@
-import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { ListCheckInsByUserUseCase } from '@/domain/check-in/application/use-cases/check-in/list-check-ins-by-user'
+import { CurrentUser } from '@/infra/auth/current-user-decorator'
+import { UserPayload } from '@/infra/auth/jwt.strategy'
 import {
   BadRequestException,
   Controller,
   Get,
   NotFoundException,
-  Param,
-  ParseUUIDPipe,
   Query,
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../../pipes/zod-validation-pipe'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { CheckInWithGymPaginatedPresenter } from '../../presenters/check-in-with-gym-paginated-presenter'
 
 const pageQueryParamSchema = z
@@ -35,20 +35,20 @@ const sizeValidationPipe = new ZodValidationPipe(sizeQueryParamSchema)
 
 type sizeQueryParamSchema = z.infer<typeof sizeQueryParamSchema>
 
-@Controller('accounts/:userId/check-ins')
-export class ListCheckInsByUserController {
+@Controller('accounts/check-ins')
+export class ListAccountCheckInsController {
   constructor(private listCheckInsByUserUseCase: ListCheckInsByUserUseCase) {}
 
   @Get()
   async handle(
-    @Param('userId', ParseUUIDPipe) userId: string,
+    @CurrentUser() user: UserPayload,
     @Query('page', queryValidationPipe) page: pageQueryParamSchema,
     @Query('per_page', sizeValidationPipe) perPage: sizeQueryParamSchema,
   ) {
     const result = await this.listCheckInsByUserUseCase.execute({
       page,
       perPage,
-      userId,
+      userId: user.sub,
     })
 
     if (result.isLeft()) {

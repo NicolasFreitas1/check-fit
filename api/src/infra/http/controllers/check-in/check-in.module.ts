@@ -9,11 +9,13 @@ import { GetCheckInByIdController } from './get-check-in-by-id.controller'
 import { GetCheckInByIdUseCase } from '@/domain/check-in/application/use-cases/check-in/get-check-in-by-id'
 import { DeleteCheckInController } from './delete-check-in.controller'
 import { DeleteCheckInUseCase } from '@/domain/check-in/application/use-cases/check-in/delete-check-in'
+import { ListAccountCheckInsController } from './list-account-check-ins.controller copy'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     CreateCheckInController,
+    ListAccountCheckInsController,
     ListCheckInsByUserController,
     GetCheckInByIdController,
     DeleteCheckInController,

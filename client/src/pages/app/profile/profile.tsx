@@ -39,7 +39,13 @@ export function Profile() {
         <h1 className="text-3xl font-bold tracking-tight">Meu Perfil</h1>
         {userProfile ? (
           <>
-            <div className="grid h-full grid-cols-[1fr,2fr] gap-6 overflow-hidden">
+            <div
+              className={`${
+                userProfile.user.isAdmin
+                  ? "flex flex-1 justify-center items-center"
+                  : "grid grid-cols-[1fr,2fr]"
+              } h-full gap-6 overflow-hidden`}
+            >
               <div className="flex flex-col justify-center items-center space-y-2.5 border rounded-md p-6">
                 <Avatar className="bg-secondary h-40 w-40 text-7xl">
                   <AvatarFallback>{userProfile?.user.name[0]}</AvatarFallback>
@@ -67,7 +73,9 @@ export function Profile() {
                 </div>
               </div>
 
-              <LastCheckIns checkIns={checkIns} />
+              {!userProfile.user.isAdmin && (
+                <LastCheckIns checkIns={checkIns} />
+              )}
             </div>
           </>
         ) : (
