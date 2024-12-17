@@ -52,11 +52,11 @@ Antes de iniciar a aplicação, você precisa garantir que atenda aos seguintes 
 
 ### 1. Backend (API)
 
-Siga as instruções da documentação específica da API para rodá-la reparadamente. Para mais detalhes, acesse a [documentação da API](./api/README.md).
+Siga as instruções da documentação específica da API para rodá-la separadamente. Para mais detalhes, acesse a [documentação da API](./api/README.md).
 
 ### 2. Frontend (Client)
 
-Siga as instruções da documentação específica do Frontend para rodá-lo reparadamente. Para mais detalhes, acesse a [documentação da API](./client/README.md).
+Siga as instruções da documentação específica do Frontend para rodá-lo separadamente. Para mais detalhes, acesse a [documentação da API](./client/README.md).
 
 ## Documentações
 
