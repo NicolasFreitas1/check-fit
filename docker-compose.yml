@@ -17,7 +17,7 @@ services:
     container_name: check-fit-api
     build:
       context: ./api
-      dockerfile: /docker/development/Dockerfile
+      dockerfile: docker/development/Dockerfile
     image: server_check_fit
     ports:
       - '3001:3001'
@@ -28,7 +28,7 @@ services:
     container_name: check-fit-client
     build:
       context: ./client
-      dockerfile: /docker/development/Dockerfile
+      dockerfile: docker/development/Dockerfile
     image: client_check_fit
     ports:
       - '80:80'
