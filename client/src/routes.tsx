@@ -11,6 +11,7 @@ import { Profile } from "./pages/app/profile/profile";
 import { AdminLayout } from "./pages/_layout/admin";
 import { AdminGyms } from "./pages/admin/gyms/admin-gyms";
 import { CreateGym } from "./pages/admin/gyms/create-gym";
+import { EditGym } from "./pages/admin/gyms/edit-gym";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin/gyms/register",
         element: <CreateGym />,
+      },
+      {
+        path: "/admin/gyms/:gymId/edit",
+        element: <EditGym />,
       },
       {
         path: "/admin/profile",

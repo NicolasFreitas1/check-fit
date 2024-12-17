@@ -9,6 +9,7 @@ import { formatPhone } from "@/utils/phone-formater";
 import { ColumnDef } from "@tanstack/react-table";
 import { GymDetailsButton } from "../../../components/gym-details-button";
 import { DeleteGymButton } from "./delete-gym-button";
+import { EditGymButton } from "./edit-gym-button";
 
 export const adminGymColumns: ColumnDef<Gym>[] = [
   {
@@ -48,6 +49,15 @@ export const adminGymColumns: ColumnDef<Gym>[] = [
                 <GymDetailsButton gymId={gym.id} />
               </TooltipTrigger>
               <TooltipContent>Detalhes da academia</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <EditGymButton gym={gym} />
+              </TooltipTrigger>
+              <TooltipContent>Editar academia</TooltipContent>
             </Tooltip>
           </TooltipProvider>
 
