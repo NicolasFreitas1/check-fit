@@ -17,6 +17,8 @@ Check Fit Client é a aplicação frontend construída com **React**, **Vite**, 
 
 ### Pré-requisitos
 
+- Antes de rodar a aplicação, certifique-se de que a API do **Check Fit** está funcionando. A documentação da API está disponível [aqui](../api/README.md).
+
 - Certifique-se de ter o **Node.js** instalado. Se não tiver, instale-o a partir do [site oficial](https://nodejs.org/).
 
 ### Variáveis de Ambiente
@@ -81,4 +83,3 @@ Os usuários podem:
 
 - **Listar seus check-ins**: Visualizar todas as academias nas quais realizaram check-in.
 - **Deletar check-ins**: Remover um check-in realizado em uma academia.
-
