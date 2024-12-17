@@ -150,7 +150,9 @@ export function EditPasswordDialog({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit">Editar</Button>
+              <Button type="submit" className="text-white text-bold">
+                Editar
+              </Button>
             </DialogFooter>
           </form>
         </Form>

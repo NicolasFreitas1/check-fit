@@ -21,7 +21,7 @@ export function Profile() {
   }
 
   async function getCheckIns() {
-    const checkIns = await listCheckIns({});
+    const checkIns = await listCheckIns({ perPage: 10 });
     setCheckIns(checkIns.checkIns);
   }
 
@@ -35,7 +35,7 @@ export function Profile() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 space-y-6">
+      <div className="flex flex-col gap-4 overflow-hidden">
         <h1 className="text-3xl font-bold tracking-tight">Meu Perfil</h1>
         {userProfile ? (
           <>

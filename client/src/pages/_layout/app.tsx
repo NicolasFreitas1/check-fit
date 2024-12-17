@@ -41,9 +41,9 @@ export function AppLayout() {
   }, [navigate, isAuthenticated, user?.isAdmin]);
 
   return (
-    <div className="flex min-h-screen flex-col antialiased">
+    <div className="flex h-full flex-col antialiased overflow-hidden">
       <Header />
-      <div className="flex flex-1 flex-col gap-4 p-8 pt-6">
+      <div className="flex h-full flex-col space-y-6 overflow-hidden p-6">
         <Outlet />
       </div>
     </div>
