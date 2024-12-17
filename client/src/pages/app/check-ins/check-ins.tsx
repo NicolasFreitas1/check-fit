@@ -64,6 +64,7 @@ export function CheckIns() {
               perPage={checkIns.perPage}
               totalCount={checkIns.amount}
               totalPages={checkIns.totalPages}
+              hasPerPage
             />
           )}
         </div>

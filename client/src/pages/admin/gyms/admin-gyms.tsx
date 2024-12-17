@@ -81,6 +81,7 @@ export function AdminGyms() {
               perPage={gyms.perPage}
               totalCount={gyms.amount}
               totalPages={gyms.totalPages}
+              hasPerPage
             />
           )}
         </div>

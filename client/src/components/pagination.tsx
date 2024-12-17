@@ -20,6 +20,7 @@ interface PaginationNumber {
   totalCount: number;
   perPage: number;
   totalPages: number;
+  hasPerPage: boolean;
   onPageChange: (pageIndex: number) => Promise<void> | void;
   onPerPageChange: (perPageIndex: number) => Promise<void> | void;
 }
@@ -31,6 +32,7 @@ export function Pagination({
   onPageChange,
   onPerPageChange,
   totalPages,
+  hasPerPage,
 }: PaginationNumber) {
   return (
     <div className="flex items-center justify-between">
@@ -78,22 +80,24 @@ export function Pagination({
             <ChevronsRight className="h-4 w-4" />
             <span className="sr-only">Última página</span>
           </Button>
-          <Select
-            onValueChange={(value) => onPerPageChange(Number(value))}
-            defaultValue={perPageIndex.toString()}
-          >
-            <SelectTrigger>
-              <SelectValue
-                placeholder={perPageIndex}
-                className="flex h-8 w-8"
-              />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="5">5</SelectItem>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="20">20</SelectItem>
-            </SelectContent>
-          </Select>
+          {hasPerPage && (
+            <Select
+              onValueChange={(value) => onPerPageChange(Number(value))}
+              defaultValue={perPageIndex.toString()}
+            >
+              <SelectTrigger>
+                <SelectValue
+                  placeholder={perPageIndex}
+                  className="flex h-8 w-8"
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="5">5</SelectItem>
+                <SelectItem value="10">10</SelectItem>
+                <SelectItem value="20">20</SelectItem>
+              </SelectContent>
+            </Select>
+          )}
         </div>
       </div>
     </div>

@@ -1,23 +1,23 @@
-import { listGyms, ListGymsResponse } from "@/api/list-gyms";
+import { listUsers, ListUsersResponse } from "@/api/list-users";
 import { Pagination } from "@/components/pagination";
 import { DataTable } from "@/components/ui/data-table";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
-import { gymColumns } from "./gym-columns";
-import { GymTableFilter } from "../../../components/gym-table-filter";
+import { userColumns } from "./user-columns";
+import { UserTableFilter } from "./user-table-filter";
 
-export function Gyms() {
+export function Users() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const gymName = searchParams.get("gymName");
+  const userName = searchParams.get("userName");
 
   const pageIndex = z.coerce.number().parse(searchParams.get("page") ?? 1);
   const perPageIndex = z.coerce
     .number()
     .parse(searchParams.get("per_page") ?? 20);
 
-  const [gyms, setGyms] = useState<ListGymsResponse | undefined>(undefined);
+  const [users, setUsers] = useState<ListUsersResponse | undefined>(undefined);
 
   function handlePagination(pageIndex: number) {
     setSearchParams((state) => {
@@ -33,42 +33,42 @@ export function Gyms() {
     });
   }
 
-  async function fetchGyms(
-    gymNameFilter: string | null | undefined,
+  async function fetchUsers(
+    userNameFilter: string | null | undefined,
     page: number,
     perPage: number
   ) {
-    const gymsResponse = await listGyms({
-      gymName: gymNameFilter,
+    const usersResponse = await listUsers({
+      userName: userNameFilter,
       page,
       perPage,
     });
 
-    setGyms(gymsResponse);
+    setUsers(usersResponse);
   }
 
   useEffect(() => {
-    fetchGyms(gymName, pageIndex, perPageIndex);
-  }, [gymName, pageIndex, perPageIndex]);
+    fetchUsers(userName, pageIndex, perPageIndex);
+  }, [userName, pageIndex, perPageIndex]);
 
   return (
     <>
       <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">Academias</h1>
+        <h1 className="text-3xl font-bold tracking-tight">Usuários</h1>
         <div className="space-y-2.5">
-          <GymTableFilter />
+          <UserTableFilter />
           <div className="overflow-hidden">
-            {gyms && <DataTable columns={gymColumns} data={gyms.gyms} />}
+            {users && <DataTable columns={userColumns} data={users.users} />}
           </div>
-          {gyms && (
+          {users && (
             <Pagination
               onPageChange={handlePagination}
               onPerPageChange={handlePerPagePagination}
-              pageIndex={gyms.actualPage}
-              perPageIndex={gyms.perPage}
-              perPage={gyms.perPage}
-              totalCount={gyms.amount}
-              totalPages={gyms.totalPages}
+              pageIndex={users.actualPage}
+              perPageIndex={users.perPage}
+              perPage={users.perPage}
+              totalCount={users.amount}
+              totalPages={users.totalPages}
               hasPerPage
             />
           )}
