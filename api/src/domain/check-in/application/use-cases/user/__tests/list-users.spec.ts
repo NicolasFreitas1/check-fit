@@ -19,9 +19,10 @@ describe('List Recent Users', () => {
     const result = await sut.execute({
       page: 1,
       perPage: 20,
+      filter: {},
     })
 
-    expect(result.value?.users).toEqual([
+    expect(result.value?.users.data).toEqual([
       expect.objectContaining({ name: 'user-03' }),
       expect.objectContaining({ name: 'user-02' }),
       expect.objectContaining({ name: 'user-01' }),
@@ -36,8 +37,9 @@ describe('List Recent Users', () => {
     const result = await sut.execute({
       page: 2,
       perPage: 20,
+      filter: {},
     })
 
-    expect(result.value?.users).toHaveLength(2)
+    expect(result.value?.users.data).toHaveLength(2)
   })
 })

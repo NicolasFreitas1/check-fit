@@ -1,8 +1,14 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { User } from '../../enterprise/entities/user'
+import { FilterUser } from '../use-cases/user/filter/filter-user'
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 
 export abstract class UsersRepository {
-  abstract findMany(params: PaginationParams): Promise<User[]>
+  abstract findMany(
+    params: PaginationParams,
+    filter: FilterUser,
+  ): Promise<DataWithPagination<User>>
+
   abstract findById(id: string): Promise<User | null>
   abstract findByEmail(email: string): Promise<User | null>
   abstract create(user: User): Promise<void>

@@ -4,18 +4,46 @@ import { User } from '@/domain/check-in/enterprise/entities/user'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaUserMapper } from '../mappers/prisma-user-mapper'
+import { Prisma } from '@prisma/client'
+import { FilterUser } from '@/domain/check-in/application/use-cases/user/filter/filter-user'
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
 
-  async findMany({ page, perPage }: PaginationParams): Promise<User[]> {
+  async findMany(
+    { page, perPage }: PaginationParams,
+    { userName }: FilterUser,
+  ): Promise<DataWithPagination<User>> {
+    const filter: Prisma.UserWhereInput = {}
+
+    if (userName) {
+      filter.name = { contains: userName, mode: 'insensitive' }
+    }
+
     const users = await this.prisma.user.findMany({
       skip: (page - 1) * perPage,
       take: perPage,
+      where: {
+        ...filter,
+      },
     })
 
-    return users.map(PrismaUserMapper.toDomain)
+    const countTotal = await this.prisma.user.count({
+      where: {
+        ...filter,
+      },
+    })
+    const totalPages = Math.max(1, Math.ceil(countTotal / perPage))
+
+    return {
+      data: users.map(PrismaUserMapper.toDomain),
+      actualPage: page,
+      amount: countTotal,
+      perPage,
+      totalPages,
+    }
   }
 
   async findById(id: string): Promise<User | null> {

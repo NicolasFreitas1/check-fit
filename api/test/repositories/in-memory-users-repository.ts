@@ -1,3 +1,4 @@
+import { DataWithPagination } from '@/core/repositories/data-with-pagination'
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { UsersRepository } from '@/domain/check-in/application/repositories/users-repository'
 import { User } from '@/domain/check-in/enterprise/entities/user'
@@ -5,10 +6,18 @@ import { User } from '@/domain/check-in/enterprise/entities/user'
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
-  async findMany({ page }: PaginationParams): Promise<User[]> {
+  async findMany({
+    page,
+  }: PaginationParams): Promise<DataWithPagination<User>> {
     const users = this.items.slice((page - 1) * 20, page * 20)
 
-    return users
+    return {
+      data: users,
+      actualPage: page,
+      perPage: 20,
+      amount: this.items.length,
+      totalPages: Math.max(1, Math.ceil(this.items.length / 20)),
+    }
   }
 
   async findById(id: string): Promise<User | null> {
