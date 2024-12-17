@@ -31,7 +31,7 @@ services:
       dockerfile: /docker/development/Dockerfile
     image: client_check_fit
     ports:
-      - '3000:3000'
+      - '80:80'
     networks:
       - check_fit_network
 

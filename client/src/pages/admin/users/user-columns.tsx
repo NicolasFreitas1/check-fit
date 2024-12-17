@@ -1,6 +1,12 @@
 import { User } from "@/context/AuthContext";
 import { ColumnDef } from "@tanstack/react-table";
 import { ListCheckInsButton } from "./list-check-ins-button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const userColumns: ColumnDef<User>[] = [
   {
@@ -27,7 +33,14 @@ export const userColumns: ColumnDef<User>[] = [
     cell: ({ row: { original: user } }) => {
       return (
         <div className="flex space-x-1">
-          <ListCheckInsButton user={user} />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <ListCheckInsButton user={user} />
+              </TooltipTrigger>
+              <TooltipContent>Check-ins do usuário</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       );
     },
