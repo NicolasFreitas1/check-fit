@@ -1,14 +1,13 @@
 import { Button } from "@/components/ui/button";
-import { Gym } from "@/types/gym";
 import { Eye } from "lucide-react";
 import { useState } from "react";
 import { GymDetailsDialog } from "./gym-details-dialog";
 
 interface GymDetailsButtonProps {
-  gym: Gym;
+  gymId: string;
 }
 
-export function GymDetailsButton({ gym }: GymDetailsButtonProps) {
+export function GymDetailsButton({ gymId }: GymDetailsButtonProps) {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
 
   return (
@@ -24,7 +23,7 @@ export function GymDetailsButton({ gym }: GymDetailsButtonProps) {
       <GymDetailsDialog
         isOpen={dialogIsOpen}
         setIsOpen={setDialogIsOpen}
-        gym={gym}
+        gymId={gymId}
       />
     </>
   );
