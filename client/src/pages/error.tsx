@@ -7,13 +7,13 @@ export function Error() {
     <div className="flex h-screen flex-col items-center justify-center gap-2">
       <h1 className="text-4xl font-bold">Whoops, algo aconteceu...</h1>
       <p className="accent-foreground ">
-        um erro aconteceu na aplacação, abaixo voce encontra mais detalhes
+        um erro aconteceu na aplacação, abaixo você encontra mais detalhes
       </p>
       <pre>{error?.message || JSON.stringify(error)}</pre>
       <p className="text-accent-foreground">
-        Voltar para o{" "}
+        Voltar para a{" "}
         <Link to={"/"} className="text-primary font-bold">
-          Dashboard
+          Página inicial
         </Link>
       </p>
     </div>

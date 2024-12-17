@@ -108,22 +108,24 @@ export function GymDetailsDialog({
                 </Map>
               </div>
             </APIProvider>
-            <div className="mt-6">
-              <a
-                href={`https://www.google.com/maps?q=${gym.latitude},${gym.longitude}`}
-                target="_blank"
-                className="mt-6 absolute text-primary"
-              >
-                Abrir no Maps
-              </a>
-            </div>
           </div>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="secondary" className="mt-6">
-                Voltar
+            <div className="flex items-end justify-center gap-3">
+              <Button asChild variant="link">
+                <a
+                  href={`https://www.google.com/maps?q=${gym.latitude},${gym.longitude}`}
+                  target="_blank"
+                  className="mt-20 text-primary"
+                >
+                  Abrir no Maps
+                </a>
               </Button>
-            </DialogClose>
+              <DialogClose asChild>
+                <Button variant="secondary" className="relative">
+                  Voltar
+                </Button>
+              </DialogClose>
+            </div>
           </DialogFooter>
         </DialogContent>
       ) : (

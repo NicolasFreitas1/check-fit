@@ -44,7 +44,11 @@ export function AccountMenu() {
           <DropdownMenuItem asChild>
             <button
               className="w-full"
-              onClick={() => navigate("/profile", { replace: true })}
+              onClick={() =>
+                navigate(`${user?.isAdmin ? "/admin/profile" : "/profile"}`, {
+                  replace: true,
+                })
+              }
             >
               <User className="mr-2 h-4 w-4" />
               <span>Meu perfil</span>

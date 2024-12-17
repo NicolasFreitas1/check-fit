@@ -2,12 +2,14 @@ import { listGyms, ListGymsResponse } from "@/api/list-gyms";
 import { Pagination } from "@/components/pagination";
 import { DataTable } from "@/components/ui/data-table";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
-import { gymColumns } from "./gym-columns";
-import { GymTableFilter } from "../../../components/gym-table-filter";
+import { adminGymColumns } from "./admin-gym-columns";
+import { GymTableFilter } from "@/components/gym-table-filter";
+import { Button } from "@/components/ui/button";
 
-export function Gyms() {
+export function AdminGyms() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const gymName = searchParams.get("gymName");
@@ -56,9 +58,19 @@ export function Gyms() {
       <div className="flex flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Academias</h1>
         <div className="space-y-2.5">
-          <GymTableFilter />
+          <div className="flex justify-between">
+            <GymTableFilter />
+            <Button
+              className="text-bold text-white"
+              onClick={() =>
+                navigate("/admin/gyms/register", { replace: true })
+              }
+            >
+              Cadastrar academia
+            </Button>
+          </div>
           <div className="overflow-hidden">
-            {gyms && <DataTable columns={gymColumns} data={gyms.gyms} />}
+            {gyms && <DataTable columns={adminGymColumns} data={gyms.gyms} />}
           </div>
           {gyms && (
             <Pagination

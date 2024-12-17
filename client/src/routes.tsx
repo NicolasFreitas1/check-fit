@@ -8,6 +8,9 @@ import { Error } from "./pages/error";
 import { NotFound } from "./pages/not-found";
 import { CheckIns } from "./pages/app/check-ins/check-ins";
 import { Profile } from "./pages/app/profile/profile";
+import { AdminLayout } from "./pages/_layout/admin";
+import { AdminGyms } from "./pages/admin/gyms/admin-gyms";
+import { CreateGym } from "./pages/admin/gyms/create-gym";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +32,29 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
+        element: <Profile />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <AdminLayout />,
+    errorElement: <Error />,
+    children: [
+      {
+        path: "/",
+        element: <Navigate to="/gyms" replace />,
+      },
+      {
+        path: "/admin/gyms",
+        element: <AdminGyms />,
+      },
+      {
+        path: "/admin/gyms/register",
+        element: <CreateGym />,
+      },
+      {
+        path: "/admin/profile",
         element: <Profile />,
       },
     ],
