@@ -33,7 +33,11 @@ export class PrismaGymsRepository implements GymsRepository {
       },
     })
 
-    const countTotal = await this.prisma.gym.count()
+    const countTotal = await this.prisma.gym.count({
+      where: {
+        ...filter,
+      },
+    })
     const totalPages = Math.max(1, Math.ceil(countTotal / perPage))
 
     return {

@@ -45,8 +45,8 @@ model CheckIn {
   gymId     String   @map("id_gym") @db.Uuid
   createdAt DateTime @default(now()) @map("dt_creation")
 
-  user User @relation(fields: [userId], references: [id])
-  gym  Gym  @relation(fields: [gymId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gym  Gym  @relation(fields: [gymId], references: [id], onDelete: Cascade)
 
   @@map("check_ins")
 }
