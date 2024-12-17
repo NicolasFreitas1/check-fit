@@ -11,11 +11,11 @@ export default defineConfig({
   },
   base: "/",
   preview: {
-    port: 80,
+    port: 8080,
     strictPort: true,
   },
   server: {
-    port: 80,
+    port: 8080,
     strictPort: true,
     host: true,
     origin: "*",
