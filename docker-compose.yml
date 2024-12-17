@@ -14,10 +14,22 @@ services:
       - check_fit_network
 
   server_check_fit:
+    container_name: check-fit-api
     build:
       context: ./api
       dockerfile: /docker/development/Dockerfile
     image: server_check_fit
+    ports:
+      - '3001:3001'
+    networks:
+      - check_fit_network
+
+  client_check_fit:
+    container_name: check-fit-client
+    build:
+      context: ./client
+      dockerfile: /docker/development/Dockerfile
+    image: client_check_fit
     ports:
       - '3000:3000'
     networks:
