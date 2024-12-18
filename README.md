@@ -5,7 +5,7 @@ A aplicação **Check Fit** consiste em dois componentes principais: a API (Back
 ## Ambiente de produção
 
 O projeto está atualmente rodando em um servidor AWS disponível no endereço:
-http://18.119.164.224:3000
+http://3.147.56.86:3000
 
 ## Requisitos
 
