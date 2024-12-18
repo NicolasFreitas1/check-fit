@@ -43,11 +43,11 @@ export function DeleteGymButton({ gymId }: DeleteGymButtonProps) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Você deseja realmente deletar essa academia?
+            Tem certeza de que deseja excluir esta academia?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Todos os check-ins vinculados à ela serão deletados também. Essa
-            ação não pode ser desfeita.
+            Todos os check-ins vinculados à ela serão deletados também. Esta
+            ação é permanente e não poderá ser desfeita
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

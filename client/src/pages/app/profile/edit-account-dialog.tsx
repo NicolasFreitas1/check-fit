@@ -24,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useNavigate } from "react-router-dom";
 
 interface EditAccountDialogProps {
   isOpen: boolean;
@@ -48,6 +49,8 @@ export function EditAccountDialog({
   setIsOpen,
   user,
 }: EditAccountDialogProps) {
+  const navigate = useNavigate();
+
   const form = useForm<EditAccountForm>({
     resolver: zodResolver(editAccountForm),
     defaultValues: {
@@ -66,6 +69,7 @@ export function EditAccountDialog({
       form.reset();
       setIsOpen(false);
       toast.success("Conta alterada com sucesso!");
+      navigate(0);
     } catch (error) {
       console.log(error);
 
@@ -103,7 +107,7 @@ export function EditAccountDialog({
         }
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-h-[70h]">
         <DialogHeader>
           <DialogTitle>Editar seu perfil</DialogTitle>
         </DialogHeader>

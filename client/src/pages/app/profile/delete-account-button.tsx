@@ -39,10 +39,10 @@ export function DeleteAccountButton() {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Você deseja realmente deletar seu perfil?
+            Tem certeza de que deseja excluir seu perfil?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Essa ação não pode ser desfeita.
+            Esta ação é permanente e não poderá ser desfeita.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -51,7 +51,7 @@ export function DeleteAccountButton() {
             onClick={handleDeleteAccount}
             className="bg-destructive text-white hover:bg-destructive"
           >
-            Continuar
+            Sim
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

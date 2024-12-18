@@ -27,7 +27,7 @@ export function Header() {
               : "text-muted-foreground"
           }
         >
-          Check-ins
+          Histórico de Check-ins
         </Link>
       </div>
       {/* DIREITA */}

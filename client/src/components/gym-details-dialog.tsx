@@ -82,10 +82,12 @@ export function GymDetailsDialog({
           <div className="flex justify-center flex-col space-y-2">
             <div>
               {" "}
-              <strong>Nome:</strong> {gym.name}
+              <strong>Nome:</strong>{" "}
+              <p className="max-w-[400px] break-words">{gym.name}</p>
             </div>
             <div>
-              <strong>Descrição:</strong> {gym.description}
+              <strong>Descrição:</strong>{" "}
+              <p className="max-w-[400px] break-words">{gym.name}</p>
             </div>
             <div>
               <strong>Telefone: </strong>
@@ -110,12 +112,12 @@ export function GymDetailsDialog({
             </APIProvider>
           </div>
           <DialogFooter>
-            <div className="flex items-end justify-center gap-3">
+            <div className="flex items-end justify-center gap-3 mt-20">
               <Button asChild variant="link">
                 <a
                   href={`https://www.google.com/maps?q=${gym.latitude},${gym.longitude}`}
                   target="_blank"
-                  className="mt-20 text-primary"
+                  className="text-primary"
                 >
                   Abrir no Maps
                 </a>

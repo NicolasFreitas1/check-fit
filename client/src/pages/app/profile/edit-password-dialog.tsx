@@ -101,7 +101,7 @@ export function EditPasswordDialog({
         }
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-h-[70h]">
         <DialogHeader>
           <DialogTitle>Editar sua senha</DialogTitle>
         </DialogHeader>

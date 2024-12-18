@@ -43,10 +43,10 @@ export function DeleteCheckInButton({ checkInId }: DeleteCheckInButtonProps) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Você deseja realmente deletar esse check-in?
+            Tem certeza de que deseja excluir este check-in?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            Essa ação não pode ser desfeita.
+            Esta ação é permanente e não poderá ser desfeita.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -55,7 +55,7 @@ export function DeleteCheckInButton({ checkInId }: DeleteCheckInButtonProps) {
             onClick={handleDeleteCheckIn}
             className="bg-destructive text-white hover:bg-destructive"
           >
-            Continuar
+            Sim
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

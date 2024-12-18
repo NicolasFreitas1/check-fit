@@ -56,7 +56,7 @@ Siga as instruções da documentação específica da API para rodá-la separada
 
 ### 2. Frontend (Client)
 
-Siga as instruções da documentação específica do Frontend para rodá-lo separadamente. Para mais detalhes, acesse a [documentação da API](./client/README.md).
+Siga as instruções da documentação específica do Frontend para rodá-lo separadamente. Para mais detalhes, acesse a [documentação do Frontend](./client/README.md).
 
 ## Documentações
 

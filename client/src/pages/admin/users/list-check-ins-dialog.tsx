@@ -64,7 +64,7 @@ export function ListCheckInsDialog({
         setIsOpen(open);
       }}
     >
-      <DialogContent>
+      <DialogContent className="max-h-[70h]">
         <DialogHeader>
           <DialogTitle>Check-ins de {user.name}</DialogTitle>
         </DialogHeader>

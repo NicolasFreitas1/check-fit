@@ -68,7 +68,7 @@ export function MakeCheckInButton({ gymId, gymName }: MakeCheckInButtonProps) {
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction onClick={handleMakeCheckIn}>
-            Continuar
+            Deletar
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
