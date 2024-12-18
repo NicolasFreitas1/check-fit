@@ -85,7 +85,7 @@ export function ListCheckInsDialog({
         )}
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline">
+            <Button type="button" variant="secondary">
               Voltar
             </Button>
           </DialogClose>

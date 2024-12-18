@@ -56,7 +56,7 @@ export function DeleteGymButton({ gymId }: DeleteGymButtonProps) {
             onClick={handleDeleteGym}
             className="bg-destructive text-white hover:bg-destructive"
           >
-            Continuar
+            Sim
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

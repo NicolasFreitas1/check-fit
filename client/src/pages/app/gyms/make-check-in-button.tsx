@@ -57,18 +57,23 @@ export function MakeCheckInButton({ gymId, gymName }: MakeCheckInButtonProps) {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Você deseja realizar check-in</AlertDialogTitle>
+          <AlertDialogTitle>
+            Tem certeza que deseja realizar check-in?
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            Você deseja realizar check-in na academia:{" "}
+            Tem certeza que deseja realizar check-in na academia:{" "}
             <span className="text-sm text-muted-foreground font-bold">
-              {gymName}
+              {gymName}?
             </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction onClick={handleMakeCheckIn}>
-            Deletar
+          <AlertDialogAction
+            onClick={handleMakeCheckIn}
+            className="text-bold text-white"
+          >
+            Sim
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
